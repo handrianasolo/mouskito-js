@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="http://code.jquery.com/jquery-3.5.1.min.js"
+	integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+	crossorigin="anonymous"></script>
     <title>Evènement JAVASCRIPT</title>
     <style>
         #div1{
@@ -92,56 +95,77 @@
 
     <script>
 
-        var test = document.getElementsByTagName("ul")[0].firstChild;
+        //var test = document.getElementsByTagName("ul")[0].firstChild;
+        var test = $('ul')[0].firstChild
         //var test2 = document.previousSibling.nodeName;
 
-        console.log(test.nextSibling.nodeName)
+        console.log(test.nextElementSibling.nodeName)
 
-        var nouvelle = document.createElement("li");
+        //var nouvelle = document.createElement("li");
+        var nouvelle = $('<li></li>')
 
-        var liTexte = document.createTextNode('node4');
-        nouvelle.appendChild(liTexte);
+        nouvelle.text('node4')
+        /*var liTexte = document.createTextNode('node4');
+        nouvelle.appendChild(liTexte);*/
 
         console.log(nouvelle)
 
-        document.getElementsByTagName('li')[2].append(nouvelle)
+        //document.getElementsByTagName('li')[2].append(nouvelle)
+        $('li')[2].append(nouvelle)
         // ------- EVENEMENT CLICK
 
         // on selectionne la div1 dans le DOM que l'on stock dans une variable
-        var div1 = document.getElementById('div1');
+        //var div1 = document.getElementById('div1');
+        var div1 = $('#div1');
         console.info(div1);
 
         // on associe l'évènement 'click' à la div1 que nous venons de selectionner, et pour chaque clic, la fonction anonyme déclarée s'execute automatiquement 
-        div1.onclick = function () {
+        div1.on('click', function(){
             //alert('Div1 (test1) - évènement CLICK');
-        }
+        })
         //----------------------------------------------------------------------
         // On selectionne la div1 et dans le même temps on associe l'évènement 'click' et la fonction anonyme s'execute automatiquement
-        document.getElementById('div1').onclick = function () {
+        /*document.getElementById('div1').onclick = function () {
             //alert('Div1 (test2) - évènement CLICK');
             this.style.backgroundColor = 'purple';
-        }
+        }*/
+        div1.on('click', function(){
+            $(this).css('background-color','purple')
+        })
 
         //----------------------------------------------------------------------
         // addEventListener() fonction prédéfinie qui fait partie de l'objet selectionné (div1) et qui permet d'associer un évènement
         // addEventListener() : 1er argument : l'évènement | 2ème arguement : le code à executer à l'évènement 
-        document.getElementById('div1').addEventListener('click', function(){
+        /*document.getElementById('div1').addEventListener('click', function(){
             //alert('Div1 (test3) - évènement CLICK');
-        });
+        });*/
+        div1.on('click', function(event){
+            //alert('Div1 (test3) - évènement CLICK');
+        })
 
         //----------------------------------------------------------------------
-        document.getElementById('div1').addEventListener('click', div1);
+        //document.getElementById('div1').addEventListener('click', div1);
+        div1.on('click', div1);
         function div1() { alert('Div1 (test4) - évènement CLICK'); }  
 
         //---------- EVENEMENT DBLCLICK
         // Exo : selectionner la div id 'div2', associer l'évènement double click et afficher une alerte en cas de double clic sur la div
-        document.getElementById('div2').ondblclick = function() {
+        /*document.getElementById('div2').ondblclick = function() {
             this.style.boxShadow = "13px 17px 23px -1px rgba(0,0,0,0.75)";
             this.style.letterSpacing = "15px";
             this.style.borderRadius = "15px";
             this.style.cursor = "pointer";
             this.style.transition = "all 2s";
-        }
+        }*/
+
+        $('#div2').on('dblclick', function(event){
+            event.preventDefault()
+            $(this).css('box-shadow', '13px 17px 23px -1px rgba(0,0,0,0.75)')
+            $(this).css('letter-spacing', '15px')
+            $(this).css('border-radius','15px')
+            $(this).css('cursor', 'pointer')
+            $(this).css('transition','all 2s')
+        })
 
         // document.getElementById('div1').addEventListener('dblclick', function()    {
         //     this.style.fontSize = "xx-large";
@@ -151,37 +175,55 @@
         // } 
 
         //----------- EVENEMENT MOUSEOVER
-        document.getElementById('div3').onmouseover = function() {
+        /*document.getElementById('div3').onmouseover = function() {
             this.style.boxShadow = "13px 17px 23px -1px rgba(0,0,0,0.75)";
             this.style.letterSpacing = "15px";
             this.style.borderRadius = "15px";
             this.style.cursor = "pointer";
             this.style.transition = "all 2s";
             this.style.color = "#000000"; // this dans ce cas représente l'objet 'div3' que nous avons selectionné dans le DOM
-        }
+        }*/
+        
+        $('#div3').on('mouseover', function(){
+            $(this).css('box-shadow', '13px 17px 23px -1px rgba(0,0,0,0.75)')
+            $(this).css('letter-spacing', '15px')
+            $(this).css('border-radius', '15px')
+            $(this).css('cursor', 'pointer')
+            $(this).css('transition', 'all 2s')
+            $(this).css('color', '#000000')
+        })
         //----------- EVENEMENT MOUSEOUT
-        document.getElementById('div3').onmouseout = function() {
+        /*document.getElementById('div3').onmouseout = function() {
             this.style.boxShadow = "none";
             this.style.letterSpacing = "0";
             this.style.borderRadius = "0";
             this.style.cursor = "pointer";
             this.style.transition = "all 2s";
             this.style.color = "#ffffff";
-        }
+        }*/
+
+        $('#div3').on('mouseout', function(){
+            $(this).css('box-shadow', 'none')
+            $(this).css('letter-spacing', '0')
+            $(this).css('border-radius', '0')
+            $(this).css('cursor', 'pointer')
+            $(this).css('transition', 'all 2s')
+            $(this).css('color','#ffffff')
+        })
 
         //----------- EVENEMENT MOUSEOUT
-        document.getElementById('div4').onmouseout = function() {
-            this.style.width = "200px";
-            this.style.transition = "all 1s";
-            this.style.boxShadow = "13px 17px 23px -1px rgba(0,0,0,0.75)";
-            this.style.transform = "rotate(7deg)";
-            this.style.letterSpacing = "0px"; 
+        $('#div4').on('mouseout', function() {
+            $(this).css('width','200px')
+            $(this).css('transition', 'all 1s')
+            $(this).css('box-shadow', '13px 17px 23px -1px rgba(0,0,0,0.75)')
+            $(this).css('transform','rotate(7deg)')
+            $(this).css('letter-spacing', '0px') 
             // this.style.transform = "scale(1.5)";
-            this.style.borderRadius = "15px";
-            this.style.position = "relative";
-        }
+            $(this).css('border-radius','15px')
+            $(this).css('position', 'relative')
+        })
 
-        document.getElementById('div4').onmouseover = function() {
+        /*document.getElementById('div4').onmouseover = function() {
             this.style.width = "300px";
             this.style.transition = "all 1s";
             this.style.boxShadow = "none";
@@ -190,31 +232,59 @@
             this.style.transform = "0";
             this.style.borderRadius = "0";
             this.style.position = "relative";    
-        }
+        }*/
+
+        $('#div4').on('mouseover', function(){
+            $(this).css('width','300px')
+            $(this).css('transition', 'all 1s')
+            $(this).css('box-shadow', 'none')
+            $(this).css('transform', 'rotate(0deg)')
+            $(this).css('letter-spacing', '15px')
+            $(this).css('transform','0')
+            $(this).css('border-radius','0')
+            $(this).css('position', 'relative') 
+        })
 
         //----------- EVENEMENT MOUSEDOWN
-        document.getElementById('div5').onmousedown = function() {
+        /*document.getElementById('div5').onmousedown = function() {
             alert('Evènement div5 MOUSEDOWN');
-        }
+        }*/
+
+        $('#div5').on('mousedown', function(){
+            alert('Evènement div5 MOUSEDOWN');
+        })
 
         //----------- EVENEMENT KEYDOWN
         // KEYDOWN se déclenche lorsque l'on presse un touche du clavier dans le champ input
-        document.getElementById('form1').onkeydown = function() {
+        /*document.getElementById('form1').onkeydown = function() {
             alert('Evènement KEYDOWN form1 !!');
-        }
+        }*/
+
+        $('#form1').on('keydown', function(){
+            alert('Evènement KEYDOWN form1 !!');
+        })
 
         //---------- EVENEMENT SELECT
          // SELECT se déclenche lorsque l'on selectionne le contenu d'un input
-        document.getElementById('form2').onselect = function() {
+        /*document.getElementById('form2').onselect = function() {
             alert('Evènement SELECT form2 !!');
-        }
+        }*/
+
+        $('#form2').on('select', function(){
+            alert('Evènement SELECT form2 !!');
+        })
 
         //---------- EVENEMENT SUBMIT
         // event : représente l'évènement 'submit'
-        document.getElementById('form3').onsubmit = function(event) {
+        /*document.getElementById('form3').onsubmit = function(event) {
             event.preventDefault(); // preventDefault() est une fonction prédéfinie qui permet d'annuler le comportement du bouton 'submit' qui a pour rôle de recharger le code / la page 
             alert('Evènement SUBMIT form3 !!');
-        }
+        }*/
+
+        $('#form3').on('submit', function(event){
+            event.preventDefault()
+            alert('Evènement SUBMIT form3 !!');
+        })
 
     </script>
 </body>
